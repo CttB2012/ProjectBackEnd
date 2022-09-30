@@ -24,7 +24,7 @@ public class ProdutosDatabase {
 
     @Id
     @Column(name = "id_produto")
-    private String produtoId;
+    private Integer produtoId;
     @Column(name = "preço" )
     private BigDecimal preco;
     @Column(name = "descrição")
