@@ -19,6 +19,7 @@ public class CategoriasController {
     @Autowired
     private CategoriasService catService;
 
+    @GetMapping
     public ResponseEntity<List<CategoriasDTO>> listAll() {
         List<CategoriasDTO> list = catService.listAll();
         return ResponseEntity.ok().body(list);
@@ -28,8 +29,19 @@ public class CategoriasController {
         CategoriasDTO catDTO = catService.findById(id);
         return ResponseEntity.ok().body(catDTO);
     }
+    @PostMapping
     public EnvelopDataJson<CategoriasDTO> insert(@Valid @RequestBody Categorias cat) {
-        var response = service.insert(cat);
+        var response = catService.insert(cat);
         return new EnvelopDataJson<CategoriasDTO>();
+    }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        catService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Categorias> update(@PathVariable Integer id, @Valid @RequestBody Categorias cat) {
+        cat = catService.update(id, cat);
+        return ResponseEntity.ok().body(cat);
     }
 }

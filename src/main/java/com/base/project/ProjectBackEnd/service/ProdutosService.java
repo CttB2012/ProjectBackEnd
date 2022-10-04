@@ -66,7 +66,7 @@ public class ProdutosService {
     public void delete (Integer id) {
         try {
             repository.deleteById(id);
-        }catch (EmptyResultDataAccessException e) {
+        }catch (EntityNotFoundException e) {
             throw e;
         }
     }

@@ -48,11 +48,17 @@ public class CategoriasService {
         updateData(cat, catDB);
         return catRepository.save(catDB);
     }
+    public void delete (Integer id) {
+        try {
+            catRepository.deleteById(id);
+        }catch (EntityNotFoundException e) {
+            throw e;
+        }
+    }
 
     private void updateData(CategoriasDatabase cat, CategoriasDatabase catDB) {
         cat.setDescricao(catDB.getDescricao());
     }
-
     public CategoriasDatabase mapToDB(Categorias categorias) {
         CategoriasDatabase catDB = new CategoriasDatabase();
         catDB.setDescricao(categorias.getDescricao());
