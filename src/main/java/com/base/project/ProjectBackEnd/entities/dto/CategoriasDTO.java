@@ -1,4 +1,4 @@
-package com.base.project.ProjectBackEnd.entities;
+package com.base.project.ProjectBackEnd.entities.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,23 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-import java.math.BigDecimal;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EnvelopDataJson<T> {
+public class CategoriasDTO {
 
     @JsonProperty("id")
-    private Integer produtoId;
-    @JsonProperty("preço")
-    private BigDecimal preco;
+    private Integer categoriaId;
     @JsonProperty("descrição")
     private String descricao;
-    @JsonProperty("validade")
-    private T dataValidade;
-
-
 }

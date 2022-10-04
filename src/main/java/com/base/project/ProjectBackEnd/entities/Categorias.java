@@ -7,23 +7,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-import java.math.BigDecimal;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.Valid;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EnvelopDataJson<T> {
+@Valid
+public class Categorias {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    private Integer produtoId;
-    @JsonProperty("preço")
-    private BigDecimal preco;
+    private Integer categoriaId;
+
     @JsonProperty("descrição")
     private String descricao;
-    @JsonProperty("validade")
-    private T dataValidade;
-
 
 }
