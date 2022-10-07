@@ -27,21 +27,25 @@ public class ProdutosController {
         List<ProdutosDTO> list = service.listAll();
         return ResponseEntity.ok().body(list);
     }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProdutosDTO> findById(@PathVariable Integer id) {
         ProdutosDTO prodDTO = service.findById(id);
         return ResponseEntity.ok().body(prodDTO);
     }
+
     @PostMapping
-    public EnvelopDataJson<ProdutosDTO> insert(@Valid @RequestBody Produtos prod) {
+    public EnvelopDataJson<ProdutosDTO> insert(@Valid @RequestBody Produtos prod) throws Exception {
         var response = service.insert(prod);
         return new EnvelopDataJson<ProdutosDTO>();
     }
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<Produtos> update(@PathVariable Integer id, @Valid @RequestBody Produtos prod) {
         prod = service.update(id, prod);

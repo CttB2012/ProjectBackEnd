@@ -16,14 +16,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class EnvelopDataJson<T> {
 
-    @JsonProperty("id")
-    private Integer produtoId;
-    @JsonProperty("preço")
-    private BigDecimal preco;
-    @JsonProperty("descrição")
-    private String descricao;
-    @JsonProperty("validade")
-    private T dataValidade;
-
+    @JsonProperty("data")
+    private T data;
 
 }

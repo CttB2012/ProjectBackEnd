@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -19,11 +16,12 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "TabelaProdutos")
+@Table(name = "TesteTabelaProdutos")
 public class ProdutosDatabase {
 
     @Id
     @Column(name = "id_produto")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer produtoId;
     @Column(name = "preço" )
     private BigDecimal preco;

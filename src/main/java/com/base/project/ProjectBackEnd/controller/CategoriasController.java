@@ -24,21 +24,25 @@ public class CategoriasController {
         List<CategoriasDTO> list = catService.listAll();
         return ResponseEntity.ok().body(list);
     }
+
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CategoriasDTO> findById (@PathVariable Integer id) {
+    public ResponseEntity<CategoriasDTO> findById(@PathVariable Integer id) {
         CategoriasDTO catDTO = catService.findById(id);
         return ResponseEntity.ok().body(catDTO);
     }
+
     @PostMapping
-    public EnvelopDataJson<CategoriasDTO> insert(@Valid @RequestBody Categorias cat) {
+    public EnvelopDataJson<CategoriasDTO> insert(@Valid @RequestBody Categorias cat) throws Exception {
         var response = catService.insert(cat);
-        return new EnvelopDataJson<CategoriasDTO>();
+        return new EnvelopDataJson<CategoriasDTO>(response);
     }
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         catService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<Categorias> update(@PathVariable Integer id, @Valid @RequestBody Categorias cat) {
         cat = catService.update(id, cat);

@@ -19,12 +19,11 @@ import javax.validation.Valid;
 @Valid
 public class Categorias {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @JsonProperty("id")
     private Integer categoriaId;
 
-    @JsonProperty("descrição")
+    @JsonProperty("descricao")
     private String descricao;
 
 }

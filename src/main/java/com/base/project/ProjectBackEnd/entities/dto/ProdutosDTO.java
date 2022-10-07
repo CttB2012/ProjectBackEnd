@@ -24,6 +24,4 @@ public class ProdutosDTO {
     private String descricao;
     @JsonProperty("validade")
     private LocalDate dataValidade;
-
-
 }
