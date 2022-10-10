@@ -1,5 +1,6 @@
 package com.base.project.ProjectBackEnd.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Valid
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Produtos {
 
     @Id

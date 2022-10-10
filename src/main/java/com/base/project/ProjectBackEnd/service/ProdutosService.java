@@ -63,10 +63,9 @@ public class ProdutosService {
         try {
             ProdutosDatabase produtosDB = repository.findById(id).get();
             updateData(prod, produtosDB);
-            var prodDB =  repository.save(produtosDB);
-            prod.setDescricao(produtosDB.getDescricao());
-            prod.setPreco(produtosDB.getPreco());
-            prod.setDataValidade(produtosDB.getDataValidade());
+            produtosDB.setDescricao(prod.getDescricao());
+            produtosDB.setPreco(prod.getPreco());
+            produtosDB.setDataValidade(prod.getDataValidade());
             return prod;
         } catch (EntityNotFoundException e) {
             throw e;
