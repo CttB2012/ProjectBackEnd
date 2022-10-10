@@ -31,19 +31,16 @@ public class CategoriasController {
         CategoriasDTO catDTO = catService.findById(id);
         return ResponseEntity.ok().body(catDTO);
     }
-
     @PostMapping
     public EnvelopDataJson<CategoriasDTO> insert(@Valid @RequestBody Categorias cat) throws Exception {
         var response = catService.insert(cat);
         return new EnvelopDataJson<CategoriasDTO>(response);
     }
-
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         catService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
     @PutMapping(value = "/{id}")
     public ResponseEntity<Categorias> update(@PathVariable Integer id, @Valid @RequestBody Categorias cat) {
         var catDB = catService.update(id, cat);
