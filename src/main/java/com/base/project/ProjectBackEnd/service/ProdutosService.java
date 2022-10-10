@@ -19,8 +19,8 @@ public class ProdutosService {
     @Autowired
     private ProdutosRepository repository;
 
-    public List<ProdutosDTO> listAll() {
-        List<ProdutosDTO> listProdutos = new ArrayList<>();
+    public List<ProdutosDatabase> listAll() {
+        List<ProdutosDatabase> listProdutos = repository.findAll();
         return listProdutos;
     }
 
@@ -28,6 +28,7 @@ public class ProdutosService {
         try {
             ProdutosDatabase obj = repository.findById(id).get();
             ProdutosDTO produtosDTO = new ProdutosDTO();
+            produtosDTO.setProdutoId(obj.getProdutoId());
             produtosDTO.setPreco(obj.getPreco());
             produtosDTO.setDescricao(obj.getDescricao());
             produtosDTO.setDataValidade(obj.getDataValidade());
@@ -42,7 +43,7 @@ public class ProdutosService {
         //Se o produto não existir: salvar no banco de dados e retornar os dados do produto salvo
         //Se o produto existir: lançar exceção
         try {
-            Optional<ProdutosDatabase> prodDB = repository.findById(produtos.getProdutoId());
+            Optional<ProdutosDatabase> prodDB = repository.findByDescricao(produtos.getDescricao());
             if (prodDB.isPresent()) {
                 throw new Exception("Erro");
             }
@@ -88,13 +89,18 @@ public class ProdutosService {
 
     public ProdutosDatabase mapToDB(Produtos produtos) {      //Assinatura que recebe produtos do tipo Produtos e retorna ProdutosDataBase
         ProdutosDatabase produtosDB = new ProdutosDatabase();//Instanciação da ProdutosDataBase com o nome produtosDB
-        produtosDB.setProdutoId(produtos.getProdutoId());    //Recebe ProdutoId como tipo Produtos com o nome produtos e atribui para produtosDB
+        produtosDB.setPreco(produtos.getPreco());            //Recebe ProdutoId como tipo Produtos com o nome produtos e atribui para produtosDB
+        produtosDB.setDescricao(produtos.getDescricao());
+        produtosDB.setDataValidade(produtos.getDataValidade());
         return produtosDB;                                   //retorna produtosDB
     }
 
     public ProdutosDTO mapToDTO(ProdutosDatabase produtosDB) { //Assinatura que recebe produtosDB do tipo ProdutosDataBase e retorna ProdutosDTO
         ProdutosDTO produtosDTO = new ProdutosDTO();          //Instanciação da ProdutosDTO com o nome produtosDTO
         produtosDTO.setProdutoId(produtosDB.getProdutoId());  //Recebe ProdutoId  como ProdutosDatabase com o nome de produtoDB
+        produtosDTO.setPreco(produtosDB.getPreco());
+        produtosDTO.setDescricao(produtosDB.getDescricao());
+        produtosDTO.setDataValidade(produtosDB.getDataValidade());
         return produtosDTO;                                   //retorna produtosDTO
     }
 }

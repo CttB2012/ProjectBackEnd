@@ -22,7 +22,6 @@ import java.time.LocalDate;
 public class Produtos {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
     private Integer produtoId;
     @JsonProperty("preço")

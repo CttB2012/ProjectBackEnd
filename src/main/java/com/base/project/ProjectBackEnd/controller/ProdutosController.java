@@ -23,8 +23,8 @@ public class ProdutosController {
     private ProdutosService service;
 
     @GetMapping
-    public ResponseEntity<List<ProdutosDTO>> listAll() {
-        List<ProdutosDTO> list = service.listAll();
+    public ResponseEntity<List<ProdutosDatabase>> listAll() {
+        List<ProdutosDatabase> list = service.listAll();
         return ResponseEntity.ok().body(list);
     }
 
@@ -37,7 +37,7 @@ public class ProdutosController {
     @PostMapping
     public EnvelopDataJson<ProdutosDTO> insert(@Valid @RequestBody Produtos prod) throws Exception {
         var response = service.insert(prod);
-        return new EnvelopDataJson<ProdutosDTO>();
+        return new EnvelopDataJson<ProdutosDTO>(response);
     }
 
     @DeleteMapping(value = "/{id}")

@@ -2,15 +2,12 @@ package com.base.project.ProjectBackEnd.service;
 
 import com.base.project.ProjectBackEnd.entities.Categorias;
 import com.base.project.ProjectBackEnd.entities.database.CategoriasDatabase;
-import com.base.project.ProjectBackEnd.entities.database.ProdutosDatabase;
 import com.base.project.ProjectBackEnd.entities.dto.CategoriasDTO;
-import com.base.project.ProjectBackEnd.entities.dto.ProdutosDTO;
 import com.base.project.ProjectBackEnd.repository.CategoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +17,9 @@ public class CategoriasService {
     @Autowired
     private CategoriasRepository catRepository;
 
-    public List<CategoriasDTO> listAll() {
-        List<CategoriasDTO> listCategorias = new ArrayList<>();
-        return listCategorias;
+    public List<CategoriasDatabase> listAll() {
+        List<CategoriasDatabase> listCatDB = catRepository.findAll();
+        return listCatDB;
     }
 
     public CategoriasDTO findById(Integer id) {
@@ -30,6 +27,7 @@ public class CategoriasService {
             CategoriasDatabase catDB = catRepository.findById(id).get();
             CategoriasDTO catDTO = new CategoriasDTO();
             catDTO.setDescricao(catDB.getDescricao());
+            catDTO.setCategoriaId(catDB.getCategoriaId());
             return catDTO;
         } catch (EntityNotFoundException e) {
             throw e;
@@ -44,15 +42,14 @@ public class CategoriasService {
             }
             var categoriasDB = catRepository.save(mapToDB(categorias));
             return mapToDTO(categoriasDB);
-
         } catch (Exception e) {
-        throw e;
+            throw e;
 
         }
     }
 
     public Categorias update(Integer id, Categorias cat) {
-        CategoriasDatabase catDB = catRepository.getOne(id);
+        CategoriasDatabase catDB = catRepository.findById(id).get();
         updateData(cat, catDB);
         catRepository.save(catDB);
         return cat;
@@ -67,7 +64,8 @@ public class CategoriasService {
     }
 
     private void updateData(Categorias cat, CategoriasDatabase catDB) {
-        cat.setDescricao(catDB.getDescricao());
+        catDB.setDescricao(cat.getDescricao());
+       // catDB.setCategoriaId(cat.getCategoriaId());
     }
 
     public CategoriasDatabase mapToDB(Categorias categorias) {
@@ -86,3 +84,9 @@ public class CategoriasService {
 }
 
 
+//    List<CategoriasDTO> listCategorias = new ArrayList<>();
+//        for (CategoriasDatabase obj : listCatDB ) {
+//                CategoriasDTO categoriasDTO = new CategoriasDTO();
+//                categoriasDTO.setDescricao(obj.getDescricao());
+//                categoriasDTO.setCategoriaId(obj.getCategoriaId());
+//                }

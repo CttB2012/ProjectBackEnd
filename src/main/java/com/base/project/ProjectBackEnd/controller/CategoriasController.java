@@ -3,6 +3,7 @@ package com.base.project.ProjectBackEnd.controller;
 
 import com.base.project.ProjectBackEnd.entities.Categorias;
 import com.base.project.ProjectBackEnd.entities.EnvelopDataJson;
+import com.base.project.ProjectBackEnd.entities.database.CategoriasDatabase;
 import com.base.project.ProjectBackEnd.entities.dto.CategoriasDTO;
 import com.base.project.ProjectBackEnd.service.CategoriasService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class CategoriasController {
     private CategoriasService catService;
 
     @GetMapping
-    public ResponseEntity<List<CategoriasDTO>> listAll() {
-        List<CategoriasDTO> list = catService.listAll();
+    public ResponseEntity<List<CategoriasDatabase>> listAll() {
+        List<CategoriasDatabase> list = catService.listAll();
         return ResponseEntity.ok().body(list);
     }
 
@@ -45,7 +46,7 @@ public class CategoriasController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Categorias> update(@PathVariable Integer id, @Valid @RequestBody Categorias cat) {
-        cat = catService.update(id, cat);
-        return ResponseEntity.ok().body(cat);
+        var catDB = catService.update(id, cat);
+        return ResponseEntity.ok().body(catDB);
     }
 }
