@@ -12,6 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -22,9 +25,13 @@ import javax.validation.Valid;
 public class Categorias {
 
 
+    @Id
     @JsonProperty("id")
     private Integer categoriaId;
 
+    @NotNull(message = "A descrição é obrigatória")
+    @NotBlank(message = "Uma descrição deve ser inserida")
+    @NotEmpty(message = "O campo 'descrição' não pode ser vazio")
     @JsonProperty("descricao")
     private String descricao;
 

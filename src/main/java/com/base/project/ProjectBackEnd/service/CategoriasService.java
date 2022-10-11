@@ -8,6 +8,7 @@ import com.base.project.ProjectBackEnd.exceptions.ExceptionApiCadastro;
 import com.base.project.ProjectBackEnd.repository.CategoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class CategoriasService {
             }
             var categoriasDB = catRepository.save(mapToDB(categorias));
             return mapToDTO(categoriasDB);
-        } catch (Exception e) {
+        } catch (DatabaseException e) {
             throw new ExceptionApiCadastro(HttpStatus.INTERNAL_SERVER_ERROR, "CAD-03", e.getMessage());
         }
     }
@@ -57,7 +58,7 @@ public class CategoriasService {
             updateData(cat, catDB);
             catRepository.save(catDB);
             return cat;
-        }catch (EntityNotFoundException e) {
+        }catch (EmptyResultDataAccessException e) {
             throw new ExceptionApiCadastro(HttpStatus.BAD_REQUEST, "CAD-01", e.getMessage());
         }catch (Exception e) {
             throw new ExceptionApiCadastro(HttpStatus.INTERNAL_SERVER_ERROR, "CAD-03", e.getMessage());
@@ -67,10 +68,10 @@ public class CategoriasService {
     public void delete(Integer id) {
         try {
             catRepository.deleteById(id);
-        } catch (EntityNotFoundException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new ExceptionApiCadastro(HttpStatus.BAD_REQUEST, "CAD-01", e.getMessage());
-        }catch (DataIntegrityViolationException e) {
-            throw new DatabaseException(e.getMessage());
+        }catch (Exception e) {
+            throw new ExceptionApiCadastro(HttpStatus.INTERNAL_SERVER_ERROR, "CAD-04", e.getMessage());
         }
     }
 
