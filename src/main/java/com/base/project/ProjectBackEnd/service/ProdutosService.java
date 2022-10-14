@@ -3,18 +3,16 @@ package com.base.project.ProjectBackEnd.service;
 import com.base.project.ProjectBackEnd.entities.Produtos;
 import com.base.project.ProjectBackEnd.entities.database.ProdutosDatabase;
 import com.base.project.ProjectBackEnd.entities.dto.ProdutosDTO;
-import com.base.project.ProjectBackEnd.exceptions.DatabaseException;
 import com.base.project.ProjectBackEnd.exceptions.ExceptionApiCadastro;
 import com.base.project.ProjectBackEnd.repository.ProdutosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -71,7 +69,7 @@ public class ProdutosService {
             produtosDB.setPreco(prod.getPreco());
             produtosDB.setDataValidade(prod.getDataValidade());
             return prod;
-        } catch (EmptyResultDataAccessException e) {
+        } catch (NoSuchElementException e) {
             throw new ExceptionApiCadastro(HttpStatus.BAD_REQUEST, "CAD-05", e.getMessage());
         }catch (Exception e) {
             throw new ExceptionApiCadastro(HttpStatus.INTERNAL_SERVER_ERROR, "CAD-09", e.getMessage());
