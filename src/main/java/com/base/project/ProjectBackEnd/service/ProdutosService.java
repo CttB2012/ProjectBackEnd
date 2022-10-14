@@ -57,11 +57,6 @@ public class ProdutosService {
     }
 
     public Produtos update(Integer id, Produtos prod) {
-        //Verificar se o produto existe no banco de dados
-        //Se o produto existe:
-        //Atualizar produtos no banco de dados
-        //Se o produto não existe:
-        //Lançar exceção: Produto não existe na base de dados.
         try {
             ProdutosDatabase produtosDB = repository.findById(id).get();
             updateData(prod, produtosDB);
