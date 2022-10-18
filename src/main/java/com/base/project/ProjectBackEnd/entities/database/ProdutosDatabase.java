@@ -2,6 +2,7 @@ package com.base.project.ProjectBackEnd.entities.database;
 
 
 
+import com.base.project.ProjectBackEnd.entities.Categorias;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,4 +30,9 @@ public class ProdutosDatabase {
     private String descricao;
     @Column(name = "validade")
     private LocalDate dataValidade;
+
+    @ManyToOne
+    @JoinColumn(name = "categoriaId", nullable = false)
+    private CategoriasDatabase categoriasDatabase;
+
 }

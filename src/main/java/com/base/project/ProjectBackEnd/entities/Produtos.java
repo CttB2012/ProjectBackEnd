@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -29,16 +32,23 @@ public class Produtos {
     private Integer produtoId;
 
     @NotNull(message = "O preço é obrigatório")
-    @JsonProperty("preço")
+    @JsonProperty("preco")
     private BigDecimal preco;
 
     @NotNull(message = "A descrição é obrigatória")
     @NotBlank(message = "Uma descrição deve ser inserida")
     @NotEmpty(message = "O campo 'descrição' não pode ser vazio")
-    @JsonProperty("descrição")
+    @JsonProperty("descricao")
     private String descricao;
 
     @NotNull(message = "A data de validade é obrigatória")
     @JsonProperty("validade")
     private LocalDate dataValidade;
+
+
+    @NotNull
+    @JsonProperty("categoria")
+    private Categorias categorias;
+
+
 }

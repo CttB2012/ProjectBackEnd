@@ -1,6 +1,7 @@
 package com.base.project.ProjectBackEnd.service;
 
 import com.base.project.ProjectBackEnd.entities.Produtos;
+import com.base.project.ProjectBackEnd.entities.database.CategoriasDatabase;
 import com.base.project.ProjectBackEnd.entities.database.ProdutosDatabase;
 import com.base.project.ProjectBackEnd.entities.dto.ProdutosDTO;
 import com.base.project.ProjectBackEnd.exceptions.ExceptionApiCadastro;
@@ -20,6 +21,9 @@ public class ProdutosService {
 
     @Autowired
     private ProdutosRepository repository;
+
+    @Autowired
+    private CategoriasService categoriasService;
 
     public List<ProdutosDatabase> listAll() {
         List<ProdutosDatabase> listProdutos = repository.findAll();
@@ -92,6 +96,7 @@ public class ProdutosService {
         produtosDB.setPreco(produtos.getPreco());            //Recebe ProdutoId como tipo Produtos com o nome produtos e atribui para produtosDB
         produtosDB.setDescricao(produtos.getDescricao());
         produtosDB.setDataValidade(produtos.getDataValidade());
+        produtosDB.setCategoriasDatabase(categoriasService.mapToDB(produtos.getCategorias()));
         return produtosDB;                                   //retorna produtosDB
     }
 

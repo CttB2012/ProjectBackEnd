@@ -7,6 +7,7 @@ import com.base.project.ProjectBackEnd.exceptions.DatabaseException;
 import com.base.project.ProjectBackEnd.exceptions.ExceptionApiCadastro;
 import com.base.project.ProjectBackEnd.repository.CategoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +68,7 @@ public class CategoriasService {
     public void delete(Integer id) {
         try {
             catRepository.deleteById(id);
-        } catch (EntityNotFoundException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new ExceptionApiCadastro(HttpStatus.BAD_REQUEST, "CAD-01", e.getMessage());
         }catch (Exception e) {
             throw new ExceptionApiCadastro(HttpStatus.INTERNAL_SERVER_ERROR, "CAD-04", e.getMessage());

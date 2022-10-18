@@ -1,6 +1,7 @@
 package com.base.project.ProjectBackEnd.entities;
 
 
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -9,10 +10,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
 
 @Getter
 @Setter
@@ -31,5 +34,8 @@ public class Categorias {
     @NotEmpty(message = "O campo 'descrição' não pode ser vazio")
     @JsonProperty("descricao")
     private String descricao;
+
+
+    //private List<Produtos> produtosList = new ArrayList<>();
 
 }
