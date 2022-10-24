@@ -18,9 +18,9 @@ public class ProdutosDTO {
 
     @JsonProperty("id")
     private Integer produtoId;
-    @JsonProperty("preço")
+    @JsonProperty("preco")
     private BigDecimal preco;
-    @JsonProperty("descrição")
+    @JsonProperty("descricao")
     private String descricao;
     @JsonProperty("validade")
     private LocalDate dataValidade;

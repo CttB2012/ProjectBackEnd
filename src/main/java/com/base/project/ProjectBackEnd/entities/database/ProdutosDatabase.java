@@ -2,7 +2,7 @@ package com.base.project.ProjectBackEnd.entities.database;
 
 
 
-import com.base.project.ProjectBackEnd.entities.Categorias;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "TesteTabelaProdutos")
-public class ProdutosDatabase {
+public class ProdutosDatabase  {
+
 
     @Id
     @Column(name = "id_produto")
@@ -31,7 +32,7 @@ public class ProdutosDatabase {
     @Column(name = "validade")
     private LocalDate dataValidade;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categoriaId", nullable = false)
     private CategoriasDatabase categoriasDatabase;
 

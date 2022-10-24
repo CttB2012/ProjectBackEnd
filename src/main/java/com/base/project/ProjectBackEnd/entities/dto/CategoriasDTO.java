@@ -15,6 +15,6 @@ public class CategoriasDTO {
 
     @JsonProperty("id")
     private Integer categoriaId;
-    @JsonProperty("descrição")
+    @JsonProperty("descricao")
     private String descricao;
 }

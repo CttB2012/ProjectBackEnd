@@ -5,7 +5,9 @@ import com.base.project.ProjectBackEnd.entities.database.CategoriasDatabase;
 import com.base.project.ProjectBackEnd.entities.database.ProdutosDatabase;
 import com.base.project.ProjectBackEnd.entities.dto.ProdutosDTO;
 import com.base.project.ProjectBackEnd.exceptions.ExceptionApiCadastro;
+import com.base.project.ProjectBackEnd.repository.CategoriasRepository;
 import com.base.project.ProjectBackEnd.repository.ProdutosRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -21,9 +23,11 @@ public class ProdutosService {
 
     @Autowired
     private ProdutosRepository repository;
-
     @Autowired
     private CategoriasService categoriasService;
+
+    @Autowired
+    private CategoriasRepository categoriasRepository;
 
     public List<ProdutosDatabase> listAll() {
         List<ProdutosDatabase> listProdutos = repository.findAll();
@@ -49,12 +53,21 @@ public class ProdutosService {
         //Se o produto não existir: salvar no banco de dados e retornar os dados do produto salvo
         //Se o produto existir: lançar exceção
         try {
+            Optional<CategoriasDatabase> catDB = categoriasRepository.findById(produtos.getCategorias().getCategoriaId());
+            if (!(catDB.isPresent())) {
+                throw new ExceptionApiCadastro(HttpStatus.BAD_REQUEST, "CAD-01");
+            }
             Optional<ProdutosDatabase> prodDB = repository.findByDescricao(produtos.getDescricao());
             if (prodDB.isPresent()) {
-                throw new ExceptionApiCadastro(HttpStatus.BAD_REQUEST, "CAD-06");
+               throw new ExceptionApiCadastro(HttpStatus.BAD_REQUEST, "CAD-06");
             }
-            var produtosDB = repository.save(mapToDB(produtos));
+            var prod = mapToDB(produtos, catDB.get());
+            var produtosDB = repository.save(prod);
             return mapToDTO(produtosDB);
+
+        } catch (ExceptionApiCadastro e) {
+            throw e;
+
         } catch (Exception e) {
             throw new ExceptionApiCadastro(HttpStatus.INTERNAL_SERVER_ERROR, "CAD-07", e.getMessage());
         }
@@ -91,12 +104,12 @@ public class ProdutosService {
         prodDB.setDataValidade(prod.getDataValidade());
     }
 
-    public ProdutosDatabase mapToDB(Produtos produtos) {      //Assinatura que recebe produtos do tipo Produtos e retorna ProdutosDataBase
+    public ProdutosDatabase mapToDB(Produtos produtos, CategoriasDatabase catDB) {      //Assinatura que recebe produtos do tipo Produtos e retorna ProdutosDataBase
         ProdutosDatabase produtosDB = new ProdutosDatabase();//Instanciação da ProdutosDataBase com o nome produtosDB
         produtosDB.setPreco(produtos.getPreco());            //Recebe ProdutoId como tipo Produtos com o nome produtos e atribui para produtosDB
         produtosDB.setDescricao(produtos.getDescricao());
         produtosDB.setDataValidade(produtos.getDataValidade());
-        produtosDB.setCategoriasDatabase(categoriasService.mapToDB(produtos.getCategorias()));
+        produtosDB.setCategoriasDatabase(catDB);
         return produtosDB;                                   //retorna produtosDB
     }
 
@@ -106,6 +119,7 @@ public class ProdutosService {
         produtosDTO.setPreco(produtosDB.getPreco());
         produtosDTO.setDescricao(produtosDB.getDescricao());
         produtosDTO.setDataValidade(produtosDB.getDataValidade());
+
         return produtosDTO;                                   //retorna produtosDTO
     }
 }
